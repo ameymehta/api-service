@@ -1,0 +1,11 @@
+version: "3"
+services:
+  api-service:
+    container_name: api-service
+    image: "api-service:latest"
+    ports:
+      - "8088:8088"
+    networks:
+      - appnet
+networks:
+  appnet:

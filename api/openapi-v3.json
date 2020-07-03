@@ -1,0 +1,313 @@
+{
+  "info": {
+    "description": "This is a REST API service",
+    "termsOfService": "",
+    "title": "API Service",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:8088/api"
+    }
+  ],
+  "tags": [
+    {
+      "description": "",
+      "name": "api"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "ErrorContainer": {
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/ErrorModel"
+            },
+            "type": "array"
+          },
+          "statusCode": {
+            "type": "integer"
+          }
+        },
+        "required": ["errors"],
+        "type": "object"
+      },
+      "ErrorModel": {
+        "properties": {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "code": {
+            "description": "The code associated with the error.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A string describing the error.",
+            "type": "string"
+          },
+          "moreInfo": {
+            "description": "Detailed information about the error.",
+            "type": "string"
+          }
+        },
+        "required": ["code", "message"],
+        "type": "object"
+      },
+      "Object": {
+        "properties": {
+          "description": {
+            "description": "A description of the object.",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "description": "The name of the object",
+            "type": "string"
+          }
+        },
+        "required": ["name"],
+        "type": "object"
+      },
+      "Objects": {
+        "properties": {
+          "objects": {
+            "items": {
+              "$ref": "#/components/schemas/Object"
+            },
+            "type": "array"
+          },
+          "totalCount": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "paths": {
+    "/objects": {
+      "get": {
+        "description": "Returns a list of objects stored in a file store.",
+        "operationId": "listObjects",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Objects"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "summary": "Lists objects",
+        "tags": ["api"]
+      },
+      "post": {
+        "description": "Adds a new object to a file store.",
+        "operationId": "addObject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Object"
+              }
+            }
+          },
+          "description": "Object that needs to be added to the file store.",
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "summary": "Adds object",
+        "tags": ["api"]
+      }
+    },
+    "/objects/{objectName}": {
+      "delete": {
+        "description": "Deletes the object with the provided ID",
+        "operationId": "deleteObject",
+        "parameters": [
+          {
+            "description": "ID of the object to delete",
+            "in": "path",
+            "name": "objectName",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Not found"
+          }
+        },
+        "summary": "Deletes object",
+        "tags": ["api"]
+      },
+      "get": {
+        "description": "Returns a single object entry with the provided ID.",
+        "operationId": "getObjectById",
+        "parameters": [
+          {
+            "description": "ID of the object to return",
+            "in": "path",
+            "name": "objectName",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Not found"
+          }
+        },
+        "summary": "Retrieves object by ID",
+        "tags": ["api"]
+      },
+      "patch": {
+        "description": "Updates an object in the file store. Accepts a partial object.",
+        "operationId": "updateObject",
+        "parameters": [
+          {
+            "description": "ID of object to update",
+            "in": "path",
+            "name": "objectName",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Object"
+              }
+            }
+          },
+          "description": "Object that needs to be added to the file store.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Object"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorContainer"
+                }
+              }
+            },
+            "description": "Not found"
+          }
+        },
+        "summary": "Updates object",
+        "tags": ["api"]
+      }
+    }
+  }
+}

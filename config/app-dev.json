@@ -1,0 +1,8 @@
+{
+    "port": {
+        "http": "8088"
+    },
+    "config": {
+        "publicUri": "http://localhost:8088"
+    }
+}
