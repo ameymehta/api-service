@@ -25,7 +25,7 @@ const startServer = async () => {
 
 		let listenerPromise = new Promise(async (resolve, reject) => {
 			try {
-				const server = http.createServer(app).listen(port.http, function () {
+				http.createServer(app).listen(port.http, function () {
 					console.log(`Express server listening on HTTP port ${port.http}!`)
 					resolve();
 				});
@@ -36,7 +36,7 @@ const startServer = async () => {
 			}
 		});
 		await listenerPromise;
-	} 
+	}
 	catch (err) {
 		console.error(`Failed to create application. Error= ${err}`)
 		application.destroy();
