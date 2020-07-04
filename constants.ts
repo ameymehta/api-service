@@ -44,8 +44,8 @@ _const("LOG_LEVEL_ERROR", "error");
 // Fitbit
 _const("AUTHORIZE_URI", "https://www.fitbit.com/oauth2/authorize");
 _const("TOKEN_URI", "https://api.fitbit.com/oauth2/token");
-_const("CLIENT_ID", "22BNJW");
-_const("CLIENT_SECRET", "54ce89188e1aeaf94502367e92dfb4ac");
+_const("CLIENT_ID", "");
+_const("CLIENT_SECRET", "");
 _const("RESPONSE_TYPE", "code");
 _const("SCOPE", "activity");
 _const("REDIRECT_URI", "http://localhost:8088/api/redirect");
