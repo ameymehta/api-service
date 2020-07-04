@@ -20,6 +20,7 @@ _const("HTTP_STATUS_OK", 200);
 _const("HTTP_STATUS_CREATED", 201);
 _const("HTTP_STATUS_ACCEPTED", 202);
 _const("HTTP_STATUS_NO_CONTENT", 204);
+_const("HTTP_STATUS_REDIRECT", 302);
 _const("HTTP_STATUS_BAD_REQUEST", 400);
 _const("HTTP_STATUS_UNAUTHORIZED", 401);
 _const("HTTP_STATUS_FORBIDDEN", 403);
@@ -39,3 +40,17 @@ _const("ERROR_INSECURE_VALUE", "The value of the '{key}' field cannot contain an
 _const("LOG_LEVEL_DEBUG", "debug");
 _const("LOG_LEVEL_INFO", "info");
 _const("LOG_LEVEL_ERROR", "error");
+
+// Fitbit
+_const("AUTHORIZE_URI", "https://www.fitbit.com/oauth2/authorize");
+_const("TOKEN_URI", "https://api.fitbit.com/oauth2/token");
+_const("CLIENT_ID", "");
+_const("CLIENT_SECRET", "");
+_const("RESPONSE_TYPE", "code");
+_const("SCOPE", "activity");
+_const("REDIRECT_URI", "http://localhost:8088/api/redirect");
+
+
+// Calendar
+_const("MONTHS", ["2020-04", "2020-05", "2020-06"]);
+_const("DAYS", ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']);

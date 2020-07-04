@@ -62,6 +62,7 @@ const _create = () => {
 			app.use(compression());
 			app.use(constants.BASEPATH, router);
 			app.use(constants.API_DOCS_BASEPATH, swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+			app.use('/web', express.static('web'));
 
 			// Router Configuration ------------------------------------------------>
 
