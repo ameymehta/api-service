@@ -79,7 +79,7 @@ const _redirect = async (req: any, res: any) => {
 		const { access_token, user_id } = JSON.parse(response);
 		console.log("access_token: " + access_token);
 		console.log("user_id: " + user_id);
-		LogQuarterlyActivities(access_token, user_id);
+		LogQuarterlyActivities(access_token);
 		res.redirect('http://localhost:8088/web/result.html');
 	} catch (err) {
 		console.error('Error: ' + err);

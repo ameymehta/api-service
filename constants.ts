@@ -44,13 +44,14 @@ _const("LOG_LEVEL_ERROR", "error");
 // Fitbit
 _const("AUTHORIZE_URI", "https://www.fitbit.com/oauth2/authorize");
 _const("TOKEN_URI", "https://api.fitbit.com/oauth2/token");
-_const("CLIENT_ID", "");
-_const("CLIENT_SECRET", "");
+_const("CLIENT_ID", "22BNJW");
+_const("CLIENT_SECRET", "54ce89188e1aeaf94502367e92dfb4ac");
 _const("RESPONSE_TYPE", "code");
 _const("SCOPE", "activity");
 _const("REDIRECT_URI", "http://localhost:8088/api/redirect");
 
 
 // Calendar
-_const("MONTHS", ["2020-04", "2020-05", "2020-06"]);
-_const("DAYS", ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']);
+_const("START_DATE", "2020-05-01");
+_const("END_DATE", "2020-05-30");
+_const("START_TIME", "9%3A20");

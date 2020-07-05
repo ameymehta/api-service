@@ -1,5 +1,5 @@
 "use strict";
-export {};
+export { };
 
 const rp = require('request-promise-native');
 const constants = require("../constants");
@@ -9,36 +9,25 @@ const constants = require("../constants");
 /**
  * 
  */
-const _logQuarterlyActivities = async (token: string, userId: string) => {
-  const months = constants.MONTHS;
-  console.log("months: " + months);
-
-  months.map(async (month: any) => {
-    await _logDailyActivity(token, userId, month)
-  })
-  
-}
-
-const _logDailyActivity = async (token: string, userId: string, month: string) => {
-  const days = constants.DAYS;
-  console.log("days: " + days);
-  days.map(async (day: any) => {
-    const activityDate = month + '-' + day;
-    let steps: number;
-    steps = await _getDaysSteps(token, userId, activityDate);
-    await new Promise(r => setTimeout(r, 5000));
-    if(steps <= 8000){
-      let missingSteps = 9000 - steps;
+const _logQuarterlyActivities = async (token: string) => {
+  const startDate = constants.START_DATE;
+  const endDate = constants.END_DATE;
+  const everyDaySteps = await _getStepsForEachDayOfQuarter(token, startDate, endDate);
+  console.log("everyDaySteps: " + JSON.stringify(everyDaySteps));
+  everyDaySteps.map(async (log: any) => {
+    await new Promise(r => setTimeout(r, 1000));
+    if (log.value <= 8000) {
+      let missingSteps = 9000 - log.value;
       let mileSteps = 1000;
-      let miles = (missingSteps - (missingSteps%mileSteps))/mileSteps;
-      await _logDaysWalk(token, activityDate, miles);
+      let miles = (missingSteps - (missingSteps % mileSteps)) / mileSteps;
+      console.log('Improving steps for ' + log.dateTime + ' with steps ' + log.value + ' adding miles ' + miles);
+      await _logDaysWalk(token, log.dateTime, miles);
     }
-  })
-  
+  });
 }
 
-const _getDaysSteps = async (token: string, userId: string, activityDate: string) => {
-  const getActivityURL = "https://api.fitbit.com/1/user/" + userId + "/activities/date/" + activityDate + ".json";
+const _getStepsForEachDayOfQuarter = async (token: string, startDate: string, endDate: string) => {
+  const getActivityURL = "https://api.fitbit.com/1/user/-/activities/steps/date/" + startDate + "/" + endDate + ".json";
   const response = await rp({
     method: 'GET',
     url: getActivityURL,
@@ -47,25 +36,29 @@ const _getDaysSteps = async (token: string, userId: string, activityDate: string
     },
     simple: true, // rejects non-200 status codes
   });
-  let stepsFound: number;
-  const { summary } = JSON.parse(response)
-  stepsFound = summary.steps;
-  console.log(activityDate + ' steps you walked ' + stepsFound)
-  return stepsFound;
+  const jsonResponse = JSON.parse(response);
+  return jsonResponse["activities-steps"];
 }
 
 const _logDaysWalk = async (token: string, activityDate: string, miles: number) => {
-  const activityLogURL = "https://api.fitbit.com/1/user/-/activities.json?activityId=90013&startTime=12%3A20&durationMillis=1800000&date=" + activityDate + "&distance=" + miles;
-  const response = await rp({
-    method: 'POST',
-    url: activityLogURL,
-    headers: {
-      "Content-type": "application/json",
-      "Authorization": "Bearer " + token,
-    },
-    simple: true, // rejects non-200 status codes
-  });
-  console.log(activityDate + ' steps logged: ' + JSON.parse(response).activityLog.steps);
+  let response;
+  try {
+    const activityLogURL = "https://api.fitbit.com/1/user/-/activities.json?activityId=90013&startTime=" + constants.START_TIME + "&durationMillis=1800000&date=" + activityDate + "&distance=" + miles;
+    response = await rp({
+      method: 'POST',
+      url: activityLogURL,
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": "Bearer " + token,
+      },
+      simple: true, // rejects non-200 status codes
+    });
+    console.log(activityDate + ' steps logged: ' + JSON.parse(response).activityLog.steps);
+  }
+  catch(err) {
+    console.error(JSON.stringify(err));
+    console.error(JSON.stringify(response));
+  }
 }
 
 // Public Methods ------------------------------------------------------------->
