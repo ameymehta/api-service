@@ -2,8 +2,6 @@
 logs
 
 .shell/set.personal.env.bash
-pl-docker-apis.sublime-workspace
-pl-docker-apis.sublime-project
 
 .tmp
 .filecache
@@ -36,9 +34,6 @@ tests/acceptance/report.json
 tests/acceptance/reports/raw/*.json
 tests/acceptance/reports/ubIndividual/*.json
 tests/acceptance/reports/*.json
-
-# helm charts
-helmcharts/
 
 # Logs
 logs
