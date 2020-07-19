@@ -26,7 +26,6 @@ Thumbs.db
 # vim
 .swp
 
-deploy/chef/cookbook/pl_docker_apis/files/default/dist-file
 scratch
 deploy/runtime-share
 tests/acceptance/.reports
