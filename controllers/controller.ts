@@ -4,11 +4,11 @@ declare var module: any
 export { };
 
 const express = require("express");
-const rp = require('request-promise-native');
 const errorUtil = require("../utils/error-util");
 const auth = require("../auth/authentication").Authenticate;
 const constants = require("../constants");
 const responseUtil = require("../utils/response-util");
+const k8s = require("../kubernetes/kubernetes-access");
 
 
 // Private Methods ------------------------------------------------------------>
@@ -21,9 +21,12 @@ const responseUtil = require("../utils/response-util");
  * 
  * @returns {Object}
  */
-const _listAllObjects = async (req: any, res: any) => {
+const _listPods = async (req: any, res: any) => {
 	try {
-		const response = responseUtil.handleResponse(constants.HTTP_STATUS_OK, {});
+		console.log('Listing Pods in default namespace');
+		const pods = await k8s.GetPods("default");
+		console.log(pods);
+		const response = responseUtil.handleResponse(constants.HTTP_STATUS_OK, pods);
 		res.status(response.status);
 		res.json(response.body);
 	} catch (err) {
@@ -38,6 +41,6 @@ const router = express.Router({
 });
 
 //Get all objects
-router.get("/objects", auth, _listAllObjects);
+router.get("/pods", auth, _listPods);
 
 module.exports = router;

@@ -91,10 +91,10 @@
     }
   },
   "paths": {
-    "/objects": {
+    "/pods": {
       "get": {
-        "description": "Returns a list of objects stored in a file store.",
-        "operationId": "listObjects",
+        "description": "Returns a list of pods in a namespace.",
+        "operationId": "listPods",
         "responses": {
           "200": {
             "content": {
@@ -110,7 +110,7 @@
             "description": "Bad Request"
           }
         },
-        "summary": "Lists objects",
+        "summary": "Lists pods",
         "tags": ["api"]
       }
     }

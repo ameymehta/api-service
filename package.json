@@ -7,9 +7,7 @@
   "scripts": {
     "build": "tsc && export NODE_ENV=test && gulp",
     "start": "npm run build && export NODE_ENV=dev && nodemon index.ts",
-    "prod": "export NODE_ENV=production && tsc && ts-node index.ts",
-    "test": "tsc && export NODE_ENV=test && mocha -r ts-node/register --exit tests/*.ts",
-    "coverage": "nyc --reporter html --reporter text -e .ts npm run test"
+    "prod": "export NODE_ENV=production && tsc && ts-node index.ts"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",
@@ -21,6 +19,7 @@
     "express": "^4.16.4",
     "express-validator": "5.3.1",
     "fs-sync": "^1.0.6",
+    "kubernetes-client": "^8.3.6",
     "lodash": "^4.17.11",
     "log4js": "^3.0.0",
     "merge": "^1.2.1",
