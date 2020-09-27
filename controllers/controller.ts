@@ -24,9 +24,9 @@ const k8s = require("../kubernetes/kubernetes-access");
 const _listPods = async (req: any, res: any) => {
 	try {
 		console.log('Listing Pods in default namespace');
-		const pods = await k8s.GetPods("default");
-		console.log(pods);
-		const response = responseUtil.handleResponse(constants.HTTP_STATUS_OK, pods);
+		const podNames = await k8s.GetPodNames("webapp");
+		console.log(podNames);
+		const response = responseUtil.handleResponse(constants.HTTP_STATUS_OK, podNames);
 		res.status(response.status);
 		res.json(response.body);
 	} catch (err) {

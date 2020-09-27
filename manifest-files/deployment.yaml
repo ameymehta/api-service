@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: 700290225223.dkr.ecr.us-east-1.amazonaws.com/webapp:latest
+        imagePullPolicy: Always
+        terminationMessagePolicy: FallbackToLogsOnError
+        name: webapp
+        ports:
+        - containerPort: 8088
+          protocol: TCP
+      restartPolicy: Always
