@@ -23,7 +23,7 @@ const startServer = async () => {
 		const port = nconf.get("port");
 		console.log(`Starting server on port ${port.http}`)
 
-		let listenerPromise = new Promise(async (resolve, reject) => {
+		let listenerPromise = new Promise<void>(async (resolve, reject) => {
 			try {
 				const server = http.createServer(app).listen(port.http, function () {
 					console.log(`Express server listening on HTTP port ${port.http}!`)
