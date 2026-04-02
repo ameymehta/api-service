@@ -2,7 +2,7 @@
 export {};
 
 const gulp = require("gulp");
-const eslint = require("gulp-eslint");
+const eslint = require("gulp-eslint-new");
 
 /**
  * Overview of gulp:
@@ -37,9 +37,9 @@ const eslint = require("gulp-eslint");
  */
 
 const eslintBuild = () => {
-    return gulp.src(["**/*.ts", "!tests/**/**.ts", "!gulpFile.ts"])
+    return gulp.src(["**/*.ts", "!node_modules/**", "!tests/**/**.ts", "!gulpFile.ts"])
         .pipe(eslint({
-            configFile: "eslint.json"
+            overrideConfigFile: "eslint.json"
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());

@@ -4,7 +4,6 @@ declare var module: any
 export { };
 
 const express = require("express");
-const rp = require('request-promise-native');
 const errorUtil = require("../utils/error-util");
 const auth = require("../auth/authentication").Authenticate;
 const constants = require("../constants");
