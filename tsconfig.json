@@ -8,9 +8,11 @@
       "baseUrl": ".",
       "esModuleInterop": true,
       "skipLibCheck": true,
+      "types": ["node"],
       "paths": {
         "*": ["node_modules/*"]
-      }
+      },
+      "ignoreDeprecations": "6.0",
     },
     "include": [
       "**/*"
